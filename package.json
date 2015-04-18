@@ -1,0 +1,23 @@
+{
+  "name": "fis3-preprocessor-extlang",
+  "version": "1.0.0",
+  "description": "ext lang",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/2betop/fis3-preprocessor-extlang.git"
+  },
+  "keywords": [
+    "fis3",
+    "extlang"
+  ],
+  "author": "fis",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/2betop/fis3-preprocessor-extlang/issues"
+  },
+  "homepage": "https://github.com/2betop/fis3-preprocessor-extlang"
+}

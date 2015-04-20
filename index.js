@@ -8,12 +8,12 @@ var lang = {
 
 function getTypeByFile(file) {
   var map = {
-    '.tpl': 'smarty',
+    '.tpl': 'smarty', // or swig
     '.vm': 'velocity',
     '.jsp': 'jsp'
   };
 
-  return map[file.ext];
+  return file.isHtmlLike && map[file.rExt];
 }
 
 module.exports = function(content, file, conf) {

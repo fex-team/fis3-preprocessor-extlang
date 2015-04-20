@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/2betop/fis3-preprocessor-extlang/issues"
   },
-  "homepage": "https://github.com/2betop/fis3-preprocessor-extlang"
+  "homepage": "https://github.com/2betop/fis3-preprocessor-extlang",
+  "dependencies": {
+    "fis-velocity-label-parser": "~0.0.5"
+  }
 }

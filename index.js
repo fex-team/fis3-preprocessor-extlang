@@ -3,7 +3,8 @@ var lang = {
   smarty: require('./lang/smarty.js'),
   swig: require('./lang/swig.js'),
   velocity: require('./lang/velocity.js'),
-  jsp: require('./lang/jsp.js')
+  jsp: require('./lang/jsp.js'),
+  blade: require('./lang/blade.js')
 };
 
 function getTypeByFile(file) {

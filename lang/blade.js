@@ -30,5 +30,5 @@ module.exports = function(content, file, conf) {
     return m;
   });
 
-  return '@require(\'' + file.id + '\')' + content;
+  return content + '@require(\'' + file.id + '\')';
 };

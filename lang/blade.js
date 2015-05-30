@@ -15,7 +15,7 @@ module.exports = function(content, file, conf) {
     return m;
   });
 
-  var reg2 = /(<!--(?!\[)[\s\S]*?(?:-->|$)|\{\{--[\s\S]*?(?:--\}\}|$))|@(extends|require|uri|framework|widget|script|style|include)\s*\(([^\)]+)/ig;
+  var reg2 = /(<!--(?!\[)[\s\S]*?(?:-->|$)|\{\{--[\s\S]*?(?:--\}\}|$))|@(extends|require|uri|url|framework|widget|script|style|include)\s*\(([^\)]+)/ig;
 
   content = content.replace(reg2, function(m, comments, directive, params) {
     if (!comments && params) {

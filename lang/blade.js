@@ -30,5 +30,28 @@ module.exports = function(content, file, conf) {
     return m;
   });
 
-  return content + '@require(\'' + file.id + '\')';
+  // 控制 资源加载顺序
+  var reg3 = /(<!--(?!\[)[\s\S]*?(?:-->|$)|\{\{--[\s\S]*?(?:--\}\}|$))|(@extends\s*\([^\)]+)|(<html[^>]*>)/ig;
+  var hasExtends = false;
+  var hasHtml = false;
+
+  content = content.replace(reg3, function(m, comments, extend, html) {
+    if (comments) {
+      return m;
+    } else if (extend && !hasExtends) {
+      hasExtends = true;
+    } else if (html && !hasHtml) {
+      hasHtml = true;
+    }
+
+    return m;
+  });
+
+  if (!hasExtends && hasHtml) {
+    content = '@section("fis_resource")@require(\'' + file.id + '\')@show' + content;
+  } else {
+    content += '@section("fis_resource")@parent @require(\'' + file.id + '\')@stop';
+  }
+
+  return content;
 };

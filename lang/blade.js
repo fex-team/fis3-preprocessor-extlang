@@ -31,24 +31,33 @@ module.exports = function(content, file, conf) {
   });
 
   // 控制 资源加载顺序
-  var reg3 = /(<!--(?!\[)[\s\S]*?(?:-->|$)|\{\{--[\s\S]*?(?:--\}\}|$))|(@extends\s*\([^\)]+)|(<html[^>]*>)/ig;
+  var reg3 = /(<!--(?!\[)[\s\S]*?(?:-->|$)|\{\{--[\s\S]*?(?:--\}\}|$))|(@extends\s*\([^\)]+)/ig;
   var hasExtends = false;
-  var hasHtml = false;
 
   content = content.replace(reg3, function(m, comments, extend, html) {
     if (comments) {
       return m;
     } else if (extend && !hasExtends) {
       hasExtends = true;
-    } else if (html && !hasHtml) {
-      hasHtml = true;
     }
 
     return m;
   });
 
-  if (!hasExtends && hasHtml) {
-    content = '@section("fis_resource")@require(\'' + file.id + '\')@show' + content;
+  if (!hasExtends) {
+    var reg4 = /(<!--(?!\[)[\s\S]*?(?:-->|$)|\{\{--[\s\S]*?(?:--\}\}|$))|(@section\s*\(\s*('|")fis_resource\3\s*\))(.*?)@show/ig;
+    var hasSection = false;
+
+    content = content.replace(reg4, function(m, comments, prefix, quote, body) {
+      if (comments || hasSection) {
+        return m;
+      }
+
+      hasSection = true;
+      return prefix + body + '@require(\'' + file.id + '\')' + '@show';
+    });
+
+    hasSection || (content = '@section("fis_resource")@require(\'' + file.id + '\')@show' + content);
   } else {
     content += '@section("fis_resource")@parent @require(\'' + file.id + '\')@stop';
   }

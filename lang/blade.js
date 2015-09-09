@@ -31,20 +31,23 @@ module.exports = function(content, file, conf) {
   });
 
   // 控制 资源加载顺序
-  var reg3 = /(<!--(?!\[)[\s\S]*?(?:-->|$)|\{\{--[\s\S]*?(?:--\}\}|$))|(@extends\s*\([^\)]+)/ig;
+  var reg3 = /(<!--(?!\[)[\s\S]*?(?:-->|$)|\{\{--[\s\S]*?(?:--\}\}|$))|(@extends\s*\([^\)]+)|(<html[^>]*>)/ig;
   var hasExtends = false;
+  var hasHtml = false;
 
   content = content.replace(reg3, function(m, comments, extend, html) {
     if (comments) {
       return m;
     } else if (extend && !hasExtends) {
       hasExtends = true;
+    } else if (html && !hasHtml) {
+      hasHtml = true;
     }
 
     return m;
   });
 
-  if (!hasExtends) {
+  if (!hasExtends && (hasHtml || file.isPage)) {
     var reg4 = /(<!--(?!\[)[\s\S]*?(?:-->|$)|\{\{--[\s\S]*?(?:--\}\}|$))|(@section\s*\(\s*('|")fis_resource\3\s*\))(.*?)@show/ig;
     var hasSection = false;
 

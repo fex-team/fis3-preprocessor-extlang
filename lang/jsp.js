@@ -1,3 +1,4 @@
+var lang = fis.compile.lang;
 module.exports = function(content, file, conf) {
 
   var reg = /(<%--(?!\[)[\s\S]*?(?:--%>|$))|(<fis\:script(?:(?=\s)[\s\S]*?["'\s\w\/\-]>|>))([\s\S]*?)(?=<\/fis\:script\s*>|$)|(<fis\:style(?:(?=\s)[\s\S]*?["'\s\w\/\-]>|>))([\s\S]*?)(?=<\/fis\:style\s*>|$)/ig;

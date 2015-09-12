@@ -1,6 +1,6 @@
 {
   "name": "fis3-preprocessor-extlang",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "ext lang",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/2betop/fis3-preprocessor-extlang",
   "dependencies": {
-    "fis-velocity-label-parser": "~0.0.5"
+    "velocityjs": "0.7.0"
   }
 }

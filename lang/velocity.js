@@ -1,9 +1,8 @@
 var lang = fis.compile.lang;
-var Velocity = require('velocityjs');
+var parse = require('../lib/parser/parse.js');
 var _ = fis.util;
 
 module.exports = function(content, file, conf) {
-
   content = transform(content, file, conf);
 
   var reg2 = /(#\*[\s\S]*?(?:\*#|$)|##[^\n\r\f]*)|(?:#(require|extends|widget|html|uri|script|style)\s*\(\s*('|")(.*?)\3)/ig;
@@ -33,7 +32,9 @@ function transform(content, file, conf) {
     filter: true
   }, conf.customBlocks);
 
-  var asts = Velocity.parse(content, customBlocks, true);
+  var asts = parse(content, customBlocks, true);
+
+  // console.log(JSON.stringify(asts, null, 4));
 
   asts = travel(asts, {
     enter: function(node) {

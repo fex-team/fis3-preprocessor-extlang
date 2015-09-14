@@ -1,6 +1,6 @@
 {
   "name": "fis3-preprocessor-extlang",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "ext lang",
   "main": "index.js",
   "scripts": {

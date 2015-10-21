@@ -17,9 +17,11 @@ module.exports = function(content, file, conf) {
     if (comment) {
       m = fis.compile.analyseComment(comment);
     } else if (script) {
-      m = script + fis.compile.extJs(jscode, null, file);
+      m = fis.compile.xLang(script, jscode, file, 'js');
+      // m = script + fis.compile.extJs(jscode, null, file);
     } else if (style) {
-      m = style + fis.compile.extCss(csscode, null, file);
+      m = fis.compile.xLang(style, csscode, file, 'css');
+      // m = style + fis.compile.extCss(csscode, null, file);
     }
     return m;
   });
@@ -55,6 +57,22 @@ module.exports = function(content, file, conf) {
     return m;
   });
 
+  // 自动插入 require 自己的代码。
+  if (file.extras.isPage) {
+      var reg3 = new RegExp(ld + 'extends\\s+'), pos;
+
+      if(reg3.test(content)){
+          pos = content.lastIndexOf(conf.left_delimiter + '/block' + conf.right_delimiter);
+      } else {
+          pos = content.indexOf(conf.left_delimiter + '/body' + conf.right_delimiter);
+      }
+      
+      if(pos > 0){
+          var insert = conf.left_delimiter + "require name='" + file.id + "'" + conf.right_delimiter;
+          content = content.substring(0, pos) + insert + content.substring(pos);
+      }
+  }
+
   return content;
 };
 
@@ -63,5 +81,7 @@ function onStandardRestore(message) {
 
   if (info.file) {
     message.ret = info.quote + info.id.replace(/\:/g, '/') + info.quote;
+  } else {
+    message.ret = message.value;
   }
 };

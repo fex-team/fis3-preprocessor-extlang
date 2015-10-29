@@ -34,7 +34,7 @@ function transform(content, file, conf) {
 
   var asts = parse(content, customBlocks, true);
 
-  // console.log(JSON.stringify(asts, null, 4));
+  // return JSON.stringify(asts, null, 4);
 
   asts = travel(asts, {
     enter: function(node) {
@@ -231,6 +231,22 @@ var astToCode = (function() {
     return '#' + block.type +
       '(' + block.id + ' ' + (block.args ? block.args.map(codeGen.gen).join(' ') : '') +
       ')' + items.map(codeGen.gen).join('') + '#end';
+  };
+
+  codeGen['map'] = function(item) {
+    var items = [];
+    var value = item.value;
+
+    Object.keys(value).forEach(function(key) {
+      items.push('"' + key + '": ' + codeGen.gen(value[key]));
+    });
+
+    return '{' + items.join(', ')  + '}';
+  };
+
+  codeGen['define'] = function(block, items) {
+    return '#' + block.type +
+      '( $' + block.id + ' )' + items.map(codeGen.gen).join('') + '#end';
   };
 
   return codeGen;

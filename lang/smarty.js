@@ -32,6 +32,10 @@ module.exports = function(content, file, conf) {
     if (!comments && params) {
       switch (directive) {
         case 'extends':
+          if (conf.skipExtendReplacement || file.skipExtendReplacement) {
+            return m;
+          }
+
           params = params.replace(/\sfile\s*=\s*('|")(.+?)\1/ig, function(_, quote, value) {
             return ' file=' + lang.tpl.ld + quote + value + quote + lang.tpl.rd;
           });

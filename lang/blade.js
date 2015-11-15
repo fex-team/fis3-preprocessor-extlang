@@ -47,7 +47,7 @@ module.exports = function(content, file, conf) {
     return m;
   });
 
-  if (!hasExtends && (hasHtml || file.isPage)) {
+  if (!hasExtends && (hasHtml || file.isPage || file.extras && file.extras.isPage)) {
     var reg4 = /(<!--(?!\[)[\s\S]*?(?:-->|$)|\{\{--[\s\S]*?(?:--\}\}|$))|(@section\s*\(\s*('|")fis_resource\3\s*\))(.*?)@show/ig;
     var hasSection = false;
 
@@ -60,7 +60,7 @@ module.exports = function(content, file, conf) {
       return prefix + body + '@require(\'' + file.id + '\')' + '@show';
     });
 
-    hasSection || (content = '@section("fis_resource")@require(\'' + file.id + '\')@show' + content);
+    hasSection || (content = '@section("fis_resource")@require(\'' + file.id + '\')@show\n' + content);
   } else {
     content += '@section("fis_resource")@parent @require(\'' + file.id + '\')@stop';
   }

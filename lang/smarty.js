@@ -7,8 +7,8 @@ module.exports = function(content, file, conf) {
     fis.on('standard:restore:tpl', onStandardRestore);
   })(), inited = true);
 
-  conf.left_delimiter = conf.left_delimiter || fis.env().get('settings.smarty.left_delimiter') || fis.env().get('settings.template.left_delimiter') || '{%';
-  conf.right_delimiter = conf.right_delimiter || fis.env().get('settings.smarty.right_delimiter') || fis.env().get('settings.template.right_delimiter') || '%}';
+  conf.left_delimiter = conf.left_delimiter || fis.env().get('smarty.left_delimiter') || '{%';
+  conf.right_delimiter = conf.right_delimiter || fis.env().get('smarty.right_delimiter') || '%}';
 
   var ld = fis.util.escapeReg(conf.left_delimiter);
   var rd = fis.util.escapeReg(conf.right_delimiter);

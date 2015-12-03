@@ -5,7 +5,7 @@ var _ = fis.util;
 module.exports = function(content, file, conf) {
   content = transform(content, file, conf);
 
-  var reg2 = /(#\*[\s\S]*?(?:\*#|$)|##[^\n\r\f]*)|(?:#(require|extends|widget|html|uri|script|style)\s*\(\s*('|")(.*?)\3)/ig;
+  var reg2 = /(#\*[\s\S]*?(?:\*#|$)|##[^\n\r\f]*)|(?:#(require|extends|widget|html|filter|uri|script|style)\s*\(\s*('|")(.*?)\3)/ig;
 
   content = content.replace(reg2, function(m, comment, directive, quote, url) {
     if (url) {

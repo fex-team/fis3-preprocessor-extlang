@@ -14,7 +14,7 @@ module.exports = function(content, file, conf) {
     return m;
   });
 
-  var reg2 = /(<%--(?!\[)[\s\S]*?(?:--%>|$))|<fis\:(html|widget|extends|require|uri|script|style)([^>]+)/ig;
+  var reg2 = /(<%--(?!\[)[\s\S]*?(?:--%>|$))|<fis\:(html|filter|widget|extends|require|uri|script|style)([^>]+)/ig;
 
   content = content.replace(reg2, function(m, comment, type, attributes) {
 

@@ -41,7 +41,7 @@ function transform(content, file, conf) {
       if (node.type === 'script' || node.type === 'style') {
         var str = astToCode(node.body);
         node.body = [fis.compile[node.type === 'style' ? 'extCss' : 'extJs'](str, null, file)];
-      } else if (node.type === 'extends' || node.type === 'html') {
+      } else if (node.type === 'extends' || node.type === 'html' || node.type === 'filter') {
         node.body.push('\n  ## auto inject by fis3-preprocess-extlang\n  #require("' + file.id + '")\n');
       }
     }

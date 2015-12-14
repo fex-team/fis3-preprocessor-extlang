@@ -35,7 +35,7 @@ module.exports = function(content, file, conf) {
     return m;
   });
 
-  content = content.replace(/(<%--(?!\[)[\s\S]*?(?:--%>|$))|(<\/fis:(?:extends|html)>)/ig, function(_, comment, tagclose) {
+  content = content.replace(/(<%--(?!\[)[\s\S]*?(?:--%>|$))|(<\/fis:(?:extends|html|filter)>)/ig, function(_, comment, tagclose) {
     if (!comment) {
       return ' \n  <%-- auto inject by fis3-preprocess-extlang--%>\n  <fis:require name="' + file.id + '" />\n'  + tagclose;
     }

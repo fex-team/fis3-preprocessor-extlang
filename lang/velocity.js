@@ -213,7 +213,11 @@ var astToCode = (function() {
 
   codeGen['array'] = function(item) {
     if (item.isRange) {
-      return '[' + item.value[0] + '..' + item.value[1] + ']';
+      return '[' +
+        (typeof item.value[0] === 'string' ? item.value[0] : codeGen.gen(item.value[0])) +
+        '..' +
+        (typeof item.value[1] === 'string' ? item.value[1] : codeGen.gen(item.value[1])) +
+        ']';
     }
 
     return '[' + item.value.map(codeGen.gen).join(', ') + ']';

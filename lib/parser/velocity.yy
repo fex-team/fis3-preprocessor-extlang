@@ -18,7 +18,7 @@ root
 statements
   : statement
       { $$ = [$1]; }
-  | statements statement 
+  | statements statement
       { $$ = [].concat($1, $2); }
   ;
 
@@ -36,13 +36,13 @@ statement
   ;
 
 directives
-  : set 
+  : set
       { $$ = $1; }
-  | if 
+  | if
       { $$ = $1; }
   | elseif
       { $$ = $1; }
-  | else 
+  | else
       { $$ = $1; }
   | end
       { $$ = $1; }
@@ -61,7 +61,7 @@ directives
   ;
 
 set
-  : HASH SET PARENTHESIS equal CLOSE_PARENTHESIS 
+  : HASH SET PARENTHESIS equal CLOSE_PARENTHESIS
       { $$ = {type: 'set', equal: $4 }; }
   ;
 
@@ -150,7 +150,7 @@ macro_call_args_all
   ;
 
 equal
-  : references EQUAL expression 
+  : references EQUAL expression
       { $$ = [$1, $3]; }
   ;
 
@@ -210,13 +210,13 @@ parenthesis
 references
   : DOLLAR brace_begin ID attributes brace_end
       { $$ = {type: "references", id: $3, path: $4, isWraped: true, leader: $1 }; }
-  | DOLLAR ID attributes 
+  | DOLLAR ID attributes
       { $$ = {type: "references", id: $2, path: $3, leader: $1 }; }
   | DOLLAR brace_begin methodbd attributes brace_end
       { $$ = {type: "references", id: $3.id, path: $4, isWraped: true, leader: $1, args: $3.args }; }
   | DOLLAR methodbd attributes
       { $$ = {type: "references", id: $2.id, path: $3, leader: $1, args: $2.args }; }
-  | DOLLAR ID 
+  | DOLLAR ID
       { $$ = {type: "references", id: $2, leader: $1 }; }
   | DOLLAR brace_begin ID brace_end
       { $$ = {type: "references", id: $3, isWraped: true, leader: $1 }; }
@@ -227,7 +227,7 @@ references
   ;
 
 brace_begin
-  : VAR_BEGIN 
+  : VAR_BEGIN
       { $$ = $1; }
   | MAP_BEGIN
       { $$ = $1; }
@@ -241,18 +241,18 @@ brace_end
   ;
 
 attributes
-  : attribute 
+  : attribute
       { $$ = [$1]; }
-  | attributes attribute 
+  | attributes attribute
       { $$ = [].concat($1, $2); }
   ;
 
 attribute
-  : method 
+  : method
       { $$ = {type:"method", id: $1.id, args: $1.args }; }
-  | index 
+  | index
       { $$ = {type: "index", id: $1 }; }
-  | property 
+  | property
       { $$ = {type: "property", id: $1 }; if ($1.type === 'content') $$ = $1; }
   ;
 
@@ -264,43 +264,43 @@ method
 methodbd
   : ID PARENTHESIS params CLOSE_PARENTHESIS
       { $$ = {id: $1, args: $3 }; }
-  | ID PARENTHESIS CLOSE_PARENTHESIS 
+  | ID PARENTHESIS CLOSE_PARENTHESIS
       { $$ = {id: $1, args: false }; }
   ;
 
 params
-  : literals 
+  : literals
       { $$ = [$1]; }
-  | references 
+  | references
       { $$ = [$1]; }
-  | params COMMA literals 
+  | params COMMA literals
       { $$ = [].concat($1, $3); }
-  | params COMMA references 
+  | params COMMA references
       { $$ = [].concat($1, $3); }
   ;
 
 property
-  : DOT ID 
+  : DOT ID
       { $$ = $2; }
-  | DOT CONTENT 
+  | DOT CONTENT
       { $$ = {type: 'content', value: $1 + $2 }; }
   ;
 
 index
-  : BRACKET literal CLOSE_BRACKET 
-      { $$ = $2; } 
-  | BRACKET references CLOSE_BRACKET 
-      { $$ = $2; } 
-  | BRACKET literal CONTENT 
-      { $$ = {type: "content", value: $1 + $2.value + $3 }; } 
-  | BRACKET CONTENT 
-      { $$ = {type: "content", value: $1 + $2 }; } 
-  | BRACKET CLOSE_BRACKET 
-      { $$ = {type: "content", value: $1 + $2 }; } 
+  : BRACKET literal CLOSE_BRACKET
+      { $$ = $2; }
+  | BRACKET references CLOSE_BRACKET
+      { $$ = $2; }
+  | BRACKET literal CONTENT
+      { $$ = {type: "content", value: $1 + $2.value + $3 }; }
+  | BRACKET CONTENT
+      { $$ = {type: "content", value: $1 + $2 }; }
+  | BRACKET CLOSE_BRACKET
+      { $$ = {type: "content", value: $1 + $2 }; }
   ;
 
 literal
-  : string 
+  : string
       { $$ = $1; }
   | number
       { $$ = $1; }
@@ -312,9 +312,9 @@ number
   : integer
       { $$ = {type: "integer", value: $1}; }
   | INTEGER DECIMAL_POINT INTEGER
-      { $$ = {type: "decimal", value: + ($1 + '.' + $3) }; }
+      { $$ = {type: "decimal", value: (+$1) + '.' + (+$3) }; }
   | '-' INTEGER DECIMAL_POINT INTEGER
-      { $$ = {type: "decimal", value: - ($2 + '.' + $4) }; }
+      { $$ = {type: "decimal", value: '-' + (+$2) + '.' + (+$4) }; }
   ;
 
 integer
@@ -332,20 +332,20 @@ string
   ;
 
 literals
-  : array 
+  : array
       { $$ = $1;}
   | map
       { $$ = $1;}
-  | literal 
+  | literal
       { $$ = $1; }
   ;
 
 array
-  : BRACKET params CLOSE_BRACKET 
+  : BRACKET params CLOSE_BRACKET
       { $$ = {type: 'array', value: $2 }; }
   | range
       { $$ = $1; }
-  | BRACKET CLOSE_BRACKET 
+  | BRACKET CLOSE_BRACKET
       { $$ = {type: 'array', value: [] }; }
   ;
 
@@ -372,18 +372,18 @@ map_item
       { $$ = {}; $$[$1.value] = $3; }
   | string MAP_SPLIT references
       { $$ = {}; $$[$1.value] = $3; }
-  | string MAP_SPLIT 
+  | string MAP_SPLIT
       { $$ = {}; $$[$1.value] = $3; }
   | map_item COMMA string MAP_SPLIT references
       { $$ = $1; $$[$3.value] = $5; }
   | map_item COMMA string MAP_SPLIT literals
       { $$ = $1; $$[$3.value] = $5; }
   ;
-    
+
 content
-  : CONTENT 
+  : CONTENT
       { $$ = $1; }
-  | ID 
+  | ID
       { $$ = $1; }
   | HASH SET
       { $$ = $1 + $2; }

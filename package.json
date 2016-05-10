@@ -1,6 +1,6 @@
 {
   "name": "fis3-preprocessor-extlang",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "ext lang",
   "main": "index.js",
   "scripts": {
@@ -19,8 +19,5 @@
   "bugs": {
     "url": "https://github.com/2betop/fis3-preprocessor-extlang/issues"
   },
-  "homepage": "https://github.com/2betop/fis3-preprocessor-extlang",
-  "dependencies": {
-    "velocityjs": "0.7.0"
-  }
+  "homepage": "https://github.com/2betop/fis3-preprocessor-extlang"
 }

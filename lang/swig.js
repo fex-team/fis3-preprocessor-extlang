@@ -33,7 +33,7 @@ module.exports = function(content, file, conf) {
 
         default:
           params = params.replace(/\s*('|")(.+?)\1/ig, function(_, quote, value) {
-            return lang.id.ld + quote + value + quote + lang.id.rd;
+            return ' ' + lang.id.ld + quote + value + quote + lang.id.rd;
           });
           break;
       }

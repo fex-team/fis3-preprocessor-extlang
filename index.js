@@ -4,14 +4,16 @@ var lang = {
   swig: require('./lang/swig.js'),
   velocity: require('./lang/velocity.js'),
   jsp: require('./lang/jsp.js'),
-  blade: require('./lang/blade.js')
+  blade: require('./lang/blade.js'),
+  nunjucks: require('./lang/nunjucks.js')
 };
 
 function getTypeByFile(file) {
   var map = {
     '.tpl': 'smarty', // or swig
     '.vm': 'velocity',
-    '.jsp': 'jsp'
+    '.jsp': 'jsp',
+    '.njk': 'nunjucks'
   };
 
   return file.isHtmlLike && map[file.rExt];

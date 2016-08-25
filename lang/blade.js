@@ -62,7 +62,7 @@ module.exports = function(content, file, conf) {
 
     hasSection || (content = '@section("fis_resource")@require(\'' + file.id + '\')@show\n' + content);
   } else {
-    content += '@section("fis_resource")@parent @require(\'' + file.id + '\')@stop';
+    content += '\n@section("fis_resource")@parent @require(\'' + file.id + '\')@stop';
   }
 
   return content;

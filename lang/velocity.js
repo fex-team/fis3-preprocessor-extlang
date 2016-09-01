@@ -191,7 +191,12 @@ var astToCode = (function() {
   };
 
   codeGen.string = function(item) {
-    return '"' + item.value.replace(/"/g, '\\"') + '"';
+    if (item.value.indexOf('##') > 0) {
+      return "'" + item.value.replace(/"/g, '\\"') + "'";
+    }
+    else {
+      return '"' + item.value.replace(/"/g, '\\"') + '"';
+    }
   };
 
   codeGen.integer = function(item) {
